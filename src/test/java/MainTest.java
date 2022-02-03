@@ -20,43 +20,72 @@ public class MainTest {
 
   @Test
   public void tooHighOrLowTestLow() {
-    Main GuessNumberGameTest = new Main(System.in, System.out);
-    GuessNumberGameTest.setRandomNumForTest(5);
+    this.GuessNumberGameTest = new Main(System.in, System.out);
+    this.GuessNumberGameTest.setRandomNumForTest(5);
     String expected = "Your guess is too high.";
-    String actual = GuessNumberGameTest.tooHighOrLow(10);
+    String actual = this.GuessNumberGameTest.tooHighOrLow(10);
     assertEquals(expected, actual);
   }
 
   @Test
   public void tooHighOrLowTestHigh() {
-    Main GuessNumberGameTest = new Main(System.in, System.out);
-    GuessNumberGameTest.setRandomNumForTest(15);
+    this.GuessNumberGameTest = new Main(System.in, System.out);
+    this.GuessNumberGameTest.setRandomNumForTest(15);
     String expected = "Your guess is too low.";
-    String actual = GuessNumberGameTest.tooHighOrLow(10);
+    String actual = this.GuessNumberGameTest.tooHighOrLow(10);
     assertEquals(expected, actual);
   }
 
   @Test
   public void endOrContinueTestY() {
-    Main GuessNumberGameTest = new Main(System.in, System.out);
+    this.GuessNumberGameTest = new Main(System.in, System.out);
     String expected = "Continuing the game...";
-    String actual = GuessNumberGameTest.endOrContinue("Y");
+    String actual = this.GuessNumberGameTest.endOrContinue("Y");
     assertEquals(expected, actual);
   }
 
   @Test
   public void endOrContinueTestN() {
-    Main GuessNumberGameTest = new Main(System.in, System.out);
+    this.GuessNumberGameTest = new Main(System.in, System.out);
     String expected = "Thanks for playing...";
-    String actual = GuessNumberGameTest.endOrContinue("N");
+    String actual = this.GuessNumberGameTest.endOrContinue("N");
     assertEquals(expected, actual);
   }
 
   @Test
   public void gameOverTest() {
-    Main GuessNumberGameTest = new Main(System.in, System.out);
+    this.GuessNumberGameTest = new Main(System.in, System.out);
     String expected = "Game is over.";
-    String actual = GuessNumberGameTest.gameOver();
+    String actual = this.GuessNumberGameTest.gameOver();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void initGameTestWin() {
+    this.iStream = new ByteArrayInputStream("Marlon\n\n10\nn".getBytes());
+    this.GuessNumberGameTest = new Main(this.iStream, this.pStream);
+    this.GuessNumberGameTest.setRandomNumForTest(10);
+    this.GuessNumberGameTest.initGame();
+    String greeting = "Hello! What is your name?\nWell, Marlon, I am thinking of a number between 1 and 20.\nTake a guess.\n";
+    String gResponse = "Good job, Marlon! You guessed my number in 1 guesses!\nWould you like to play again? (y/n)\n";
+    String dResponse = "Thanks for playing...\nGame is over.\n";
+    String expected = greeting + gResponse + dResponse;
+    String actual = this.oStream.toString();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void initGameTestLose() {
+    this.iStream = new ByteArrayInputStream("Marlon\n\n15\nn".getBytes());
+    this.GuessNumberGameTest = new Main(this.iStream, this.pStream);
+    this.GuessNumberGameTest.setRandomNumForTest(10);
+    this.GuessNumberGameTest.setMaxGuessesForTest(1);
+    this.GuessNumberGameTest.initGame();
+    String greeting = "Hello! What is your name?\nWell, Marlon, I am thinking of a number between 1 and 20.\nTake a guess.\n";
+    String gResponse = "Your guess is too high.\nYou lose! You've failed 1 times.\nPlay again? (y/n)\n";
+    String dResponse = "Thanks for playing...\nGame is over.\n";
+    String expected = greeting + gResponse + dResponse;
+    String actual = this.oStream.toString();
     assertEquals(expected, actual);
   }
 

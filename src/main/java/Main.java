@@ -64,7 +64,6 @@ public class Main {
 
   // initialize game method
   public void initGame () {
-    this.iStream = new Scanner(System.in);
     this.pStream.println("Hello! What is your name?");
     this.userName = this.iStream.nextLine();
     this.pStream.println(String.format("Well, %s, I am thinking of a number between 1 and 20.", userName));
@@ -81,8 +80,10 @@ public class Main {
             this.pStream.println(String.format("Good job, %s! You guessed my number in %s guesses!\nWould you like to play again? (y/n)", userName, totalGuesses + 1));
             this.userDecision = this.iStream.nextLine();
             this.endOrContinue(this.userDecision);
-          } else if (this.totalGuesses == 6) {
-            this.pStream.println(String.format("Game over! You've failed %s times.\nPlay again? (y/n)", totalGuesses));
+          }
+          
+          if (this.totalGuesses == this.maxGuesses) {
+            this.pStream.println(String.format("You lose! You've failed %s times.\nPlay again? (y/n)", totalGuesses));
             this.userDecision = this.iStream.nextLine();
             this.endOrContinue(this.userDecision);
           }
@@ -95,9 +96,14 @@ public class Main {
     this.gameOver();
   }
 
-  // method strictly for testing
+  // strictly for testing method
   public void setRandomNumForTest (int num) {
     this.randomNum = num;
+  }
+
+  // strictly for testing method
+  public void setMaxGuessesForTest (int num) {
+    this.maxGuesses = num;
   }
 
   public static void main (String[] args) {
